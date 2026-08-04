@@ -1,0 +1,1 @@
+{"scripts":{"dev":"python3 -m http.server 5173 -d dist","build":"rm -rf dist && tsc && cp index.html dist/index.html && cp src/index.css dist/src/index.css"},"devDependencies":{},"private":true,"version":"0.1.0"}
