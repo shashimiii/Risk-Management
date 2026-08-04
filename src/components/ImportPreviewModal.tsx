@@ -1,0 +1,6 @@
+import type { ImportPreviewRow } from '../lib/excel';
+
+export function ImportPreviewModal({ rows, onClose, onConfirm, onViewRisk }: { rows: ImportPreviewRow[]; onClose: () => void; onConfirm: () => void; onViewRisk?: (id: string) => void }) {
+  const hasErrors = rows.some((row) => row.errors.length > 0);
+  return <div className="modal"><div className="panel wide"><h2>导入预览</h2><div className="table-wrap"><table><thead><tr>{['Excel行号', '风险名称', 'ESG议题', 'ESG分类', 'L', 'I', 'FM', 'IM', 'R', 'W', '风险等级/状态', '操作'].map((head) => <th key={head}>{head}</th>)}</tr></thead><tbody>{rows.map((row) => <tr key={row.rowNumber}><td>{row.rowNumber}</td><td>{row.risk?.riskName ?? row.input.riskName}</td><td>{row.risk?.esgTopic ?? row.input.esgTopic}</td><td>{row.risk?.esgCategory ?? row.input.esgCategory}</td><td>{row.risk?.L ?? row.input.L}</td><td>{row.risk?.I ?? row.input.I}</td><td>{row.risk?.FM ?? row.input.FM}</td><td>{row.risk?.IM ?? row.input.IM}</td><td>{row.risk?.R ?? '-'}</td><td>{row.risk?.W ?? '-'}</td><td className={row.errors.length ? 'error' : 'ok'}>{row.status}</td><td>{row.risk && onViewRisk && <button onClick={() => onViewRisk(row.risk!.id)}>查看</button>}</td></tr>)}</tbody></table></div><div className="actions"><button onClick={onClose}>关闭</button><button className="primary" disabled={hasErrors} onClick={onConfirm}>确认导入</button></div></div></div>;
+}
